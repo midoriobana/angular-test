@@ -1,3 +1,4 @@
+import { RealEstateService } from './../shared/providers/real-estate.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,9 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  listRealEstate: any = []
+
+  constructor(
+    private realEstateService: RealEstateService
+  ) { }
 
   ngOnInit() {
+    this.getRealEstate()
+  }
+
+  async getRealEstate() {
+    this.listRealEstate = await this.realEstateService.getRealEstate()
   }
 
 }

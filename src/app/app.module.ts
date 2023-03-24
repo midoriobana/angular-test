@@ -1,11 +1,13 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
@@ -15,10 +17,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AppRoutingModule,
     BrowserModule,
     SharedModule,
-    RouterModule,
-    NgbModule
+    RouterModule
   ],
-  providers: [],
+  providers: [{ provide: LOCALE_ID, useValue: 'pt-br' }],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() {
+    registerLocaleData(localePt);
+  }
+}

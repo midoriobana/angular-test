@@ -1,19 +1,19 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#"><img src="../../../assets/images/logo.svg" alt="logo-midori" width="200px" height="auto"></a>
+    <a class="navbar-brand" [routerLink]="NavRouteLinks.MODULE.HOME"><img src="../../../assets/images/logo.svg" alt="logo-midori" width="200px" height="auto"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="#">sobre</a>
+          <a class="nav-link" [routerLink]="NavRouteLinks.PAGE.ABOUT">sobre</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">anuncie seu imóvel</a>
+          <a class="nav-link" [routerLink]="NavRouteLinks.PAGE.ADVERTISE">anuncie seu imóvel</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">contato</a>
+          <a class="nav-link" [routerLink]="NavRouteLinks.PAGE.CONTACT">contato</a>
         </li>
       </ul>
       <a href="https://wa.me/5531984853312" target="_blank" class="text-decoration-none"><i class="bi bi-whatsapp me-1"></i>Entre em contato (31) 98485-3312</a>
