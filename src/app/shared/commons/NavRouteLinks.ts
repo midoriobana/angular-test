@@ -1,5 +1,8 @@
 const enum RouterEnum {
-  HOME = 'home',
+  HOME = '',
+  ABOUT = 'sobre',
+  ADVERTISE = 'anuncie-seu-imovel',
+  CONTACT = 'contato',
 }
 
 export class NavRouteLinks {
@@ -8,6 +11,9 @@ export class NavRouteLinks {
   }
 
   static PAGE = {
-    HOME: RouterEnum.HOME
+    HOME: RouterEnum.HOME,
+    ABOUT: RouterEnum.ABOUT,
+    ADVERTISE: RouterEnum.ADVERTISE,
+    CONTACT: RouterEnum.CONTACT,
   }
 }

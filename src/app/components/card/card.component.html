@@ -1,8 +1,26 @@
-<div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+<div class="row p-5">
+  <div class="card col-4" *ngFor="let realEstate of listRealEstate; let i = index">
+    <img src="" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{realEstate.nome}}</h5>
+      <p class="card-text" *ngFor="let adress of realEstate.endereco">
+        <i class="bi bi-geo-alt-fill text-danger"></i> 
+        {{adress.bairro}} - {{adress.cidade}}/{{adress.uf}}
+      </p>
+      <p class="card-text"><i class="bi bi-currency-dollar text-primary me-2"></i>{{realEstate.valor | currency:'BRL' }} -
+        <span *ngIf="realEstate.venda">Venda</span>
+        <span *ngIf="realEstate.aluguel">Aluguel</span>
+      </p>
+      <div class="border d-flex align-items-center justify-content-around">
+        <span tooltip="Área Total"
+        placement="bottom">{{realEstate.area}}m²</span>
+        <span tooltip="Dormitórios"
+        placement="bottom"><img src="../../../assets/images/bed-icon.svg" alt="bed-icon" width="22px" height="auto">{{realEstate.quartos}}</span>
+        <span tooltip="Banheiros"
+        placement="bottom"><img src="../../../assets/images/bathtub-icon.svg" alt="bathtub-icon" width="22px" height="auto">{{realEstate.banheiros}}</span>
+        <span *ngIf="realEstate.mobiliado"><img src="../../../assets/images/cabinet-icon.svg" alt="cabinet-icon" width="22px" height="auto">Mobiliado</span>
+      </div>
+      <a href="#" class="btn btn-primary my-4">Ver detalhes</a>
+    </div>
   </div>
 </div>
