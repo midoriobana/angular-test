@@ -1,10 +1,10 @@
-import { ContatoComponent } from './home/contato/contato.component';
-import { AnuncieComponent } from './home/anuncie/anuncie.component';
-import { HomeComponent } from './home/home.component';
-import { NavRouteLinks } from './shared/commons/NavRouteLinks';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SobreComponent } from './home/sobre/sobre.component';
+import { AboutComponent } from './home/about/about.component';
+import { AdvertiseComponent } from './home/advertise/advertise.component';
+import { ContactComponent } from './home/contact/contact.component';
+import { HomeComponent } from './home/home.component';
+import { NavRouteLinks } from './shared/commons/NavRouteLinks';
 
 const routes: Routes = [
   {
@@ -13,15 +13,15 @@ const routes: Routes = [
   },
   {
     path: NavRouteLinks.PAGE.ABOUT,
-    component: SobreComponent
+    component: AboutComponent
   },
   {
     path: NavRouteLinks.PAGE.ADVERTISE,
-    component: AnuncieComponent
+    component: AdvertiseComponent
   },
   {
     path: NavRouteLinks.PAGE.CONTACT,
-    component: ContatoComponent
+    component: ContactComponent
   },
   {
 		path: NavRouteLinks.PAGE.HOME,

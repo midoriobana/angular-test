@@ -1,3 +1,5 @@
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgxMaskModule } from 'ngx-mask';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -17,7 +19,9 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     BrowserModule,
     SharedModule,
-    RouterModule
+    RouterModule,
+    NgxMaskModule.forRoot(),
+    ReactiveFormsModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'pt-br' }],
   bootstrap: [AppComponent]

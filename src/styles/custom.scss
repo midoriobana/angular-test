@@ -9,6 +9,11 @@
   font-family: 'Michroma', sans-serif;
 }
 
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 .popover {
   position: absolute;
   top: 0;

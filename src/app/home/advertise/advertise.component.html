@@ -1,0 +1,131 @@
+<div class="p-5">
+  <form>
+    <div class="row my-5">
+      <h5 class="">Qual tipo de imóvel esta anunciando?</h5>
+      <div class="col">
+        <label class="form-label">Finalidade do imóvel <span class="text-danger">*</span></label>
+        <select class="form-select" aria-label="Default select example">
+          <option selected hidden>Selecione a finalidade</option>
+          <option value="venda">Venda</option>
+          <option value="aluguel">Aluguel</option>
+        </select>
+      </div>
+      <div class="col">
+        <label class="form-label">Categoria do imóvel <span class="text-danger">*</span></label>
+        <select class="form-select" aria-label="Default select example">
+          <option selected hidden>Selecione uma categoria</option>
+          <option *ngFor="let item of categoryList" [value]="item">{{item}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row my-5">
+      <h5 class="">Onde ele está localizado?</h5>
+      <div class="col-md-4">
+        <label class="form-label">CEP <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" placeholder="00000-000" mask="00000-000" (blur)="listZipCode()">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Logradouro <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" placeholder="Logradouro">
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">Número <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" placeholder="Número">
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">Complemento</label>
+        <input type="text" class="form-control" placeholder="Complemento">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Bairro <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" placeholder="Bairro">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Cidade <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" placeholder="Cidade">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Estado <span class="text-danger">*</span></label>
+        <select class="form-select">
+          <option selected hidden>Selecione uma categoria</option>
+          <option *ngFor="let item of statesList">{{item.nome}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row my-5">
+      <h5 class="">Quais as características dele?</h5>
+      <div class="col-md-4">
+        <label class="form-label">Área Total <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" placeholder="Área Total">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Unidade de medida <span class="text-danger">*</span></label>
+        <select type="text" class="form-control">
+          <option value="" selected hidden>Selecione a unidade de medida</option>
+          <option value="m">m²</option>
+          <option value="h">Hectare</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Área privativa <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" placeholder="Área privativa">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Quantidade de dormitórios</label>
+        <input type="number" class="form-control" min="0">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Quantidade de suítes</label>
+        <input type="number" class="form-control" min="0">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Quantidade de banheiros</label>
+        <input type="number" class="form-control" min="0">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Quantidade de vagas de garagem</label>
+        <input type="number" class="form-control" min="0">
+      </div>
+      <div class="col-md-2 my-2">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="check-cabinet">
+          <label class="form-check-label" for="check-cabinet">
+            Este imóvel é mobiliado
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <h5>Possui custos recorrentes?</h5>
+      <div class="col-md-4">
+        <label class="form-label">IPTU</label>
+        <input type="text" class="form-control" placeholder="IPTU">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Condomínio</label>
+        <input type="text" class="form-control" placeholder="Condomínio">
+      </div>
+    </div>
+    <div class="row my-5">
+      <h5>Dados Pessoais</h5>
+      <p>Precisamos de alguns dados pessoais para que nós possamos entrar em contato com você</p>
+      <div class="col-md-4">
+        <label class="form-label">Nome <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" placeholder="Nome">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Telefone <span class="text-danger">*</span></label>
+        <input type="tel" class="form-control" placeholder="Telefone" mask="(00) 0 0000-0000 | (00) 0000-0000">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">CPF ou CNPJ <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" placeholder="CPF ou CNPJ">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">E-mail <span class="text-danger">*</span></label>
+        <input type="e-mail" class="form-control" placeholder="E-mail">
+      </div>
+
+    </div>
+  </form>
+</div>

@@ -1,11 +1,12 @@
-import { HttpClientModule } from '@angular/common/http';
+import { NgxMaskModule } from 'ngx-mask';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { HeaderComponent } from '../components/header/header.component';
 import { CardComponent } from './../components/card/card.component';
 import { FooterComponent } from './../components/footer/footer.component';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     RouterModule,
     HttpClientModule,
     TooltipModule.forRoot(),
+    NgxMaskModule.forChild()
   ],
   declarations: [
     HeaderComponent,
@@ -23,7 +25,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     HeaderComponent,
     FooterComponent,
     CardComponent,
-    TooltipModule
+    TooltipModule,
+    NgxMaskModule
   ]
 })
 export class SharedModule { }
