@@ -7,8 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  listRealEstate: any = []
-
+  realEstateList: any = []
+ 
   constructor(
     private realEstateService: RealEstateService
   ) { }
@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   }
 
   async getRealEstate() {
-    this.listRealEstate = await this.realEstateService.getRealEstate()
+    this.realEstateList = await this.realEstateService.getRealEstate()
   }
 
 }
