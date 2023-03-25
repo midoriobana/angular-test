@@ -1,5 +1,5 @@
-<div class="row p-5">
-  <div class="card col-4" *ngFor="let realEstate of realEstateList; let i = index">
+<div class="row gap-3 p-5">
+  <div class="card col-sm-5 col-md-4 col-lg-3" *ngFor="let realEstate of realEstateList; let i = index">
     <img src="" class="card-img-top" alt="...">
     <div class="card-body">
       <h5 class="card-title">{{realEstate.nome}}</h5>
@@ -14,12 +14,19 @@
       <div class="border d-flex align-items-center justify-content-around">
         <span tooltip="Área Total"
         placement="bottom">{{realEstate.area}}m²</span>
+        <span tooltip="Área Privativa"
+        placement="bottom" *ngIf="realEstate.areaPrivativa > 0">{{realEstate.areaPrivativa}}m²</span>
         <span tooltip="Dormitórios"
-        placement="bottom"><img src="../../../assets/images/bed-icon.svg" alt="bed-icon" width="22px" height="auto">{{realEstate.quartos}}</span>
+        placement="bottom" *ngIf="realEstate.quartos > 0"><img src="../../../assets/images/bed-icon.svg" alt="bed-icon" width="22px" height="auto">{{realEstate.quartos}}</span>
         <span tooltip="Banheiros"
-        placement="bottom"><img src="../../../assets/images/bathtub-icon.svg" alt="bathtub-icon" width="22px" height="auto">{{realEstate.banheiros}}</span>
+        placement="bottom" *ngIf="realEstate.banheiros > 0"><img src="../../../assets/images/bathtub-icon.svg" alt="bathtub-icon" width="22px" height="auto">{{realEstate.banheiros}}</span>
         <span *ngIf="realEstate.mobiliado"><img src="../../../assets/images/cabinet-icon.svg" alt="cabinet-icon" width="22px" height="auto">Mobiliado</span>
+        <span tooltip="Suítes"
+        placement="bottom" *ngIf="realEstate.suites > 0"><img src="../../../assets/images/shower-icon.svg" alt="shower-icon" width="22px" height="auto">{{realEstate.banheiros}}</span>
+        <span tooltip="Garagem"
+        placement="bottom" *ngIf="realEstate.garagem > 0"><img src="../../../assets/images/garage-icon.svg" alt="garage-icon" width="22px" height="auto">{{realEstate.banheiros}}</span>
       </div>
+      
       <a href="#" class="btn btn-primary my-4">Ver detalhes</a>
     </div>
   </div>

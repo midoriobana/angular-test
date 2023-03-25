@@ -1,14 +1,16 @@
+import { RealEstateService } from './../../shared/providers/real-estate.service';
 import { ZipCodeService } from '../../shared/providers/zip-code.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-advertise',
   templateUrl: './advertise.component.html'
 })
 export class AdvertiseComponent implements OnInit {
-  formGroup: FormGroup
   adress: any
+  formGroup: FormGroup
   categoryList: any = [
     'Andar',
     'Apartamento',
@@ -38,49 +40,100 @@ export class AdvertiseComponent implements OnInit {
   ]
 
   statesList: any = [
-    { "nome": "Acre", "sigla": "AC" },
-    { "nome": "Alagoas", "sigla": "AL" },
-    { "nome": "Amapá", "sigla": "AP" },
-    { "nome": "Amazonas", "sigla": "AM" },
-    { "nome": "Bahia", "sigla": "BA" },
-    { "nome": "Ceará", "sigla": "CE" },
-    { "nome": "Distrito Federal", "sigla": "DF" },
-    { "nome": "Espírito Santo", "sigla": "ES" },
-    { "nome": "Goiás", "sigla": "GO" },
-    { "nome": "Maranhão", "sigla": "MA" },
-    { "nome": "Mato Grosso", "sigla": "MT" },
-    { "nome": "Mato Grosso do Sul", "sigla": "MS" },
-    { "nome": "Minas Gerais", "sigla": "MG" },
-    { "nome": "Pará", "sigla": "PA" },
-    { "nome": "Paraíba", "sigla": "PB" },
-    { "nome": "Paraná", "sigla": "PR" },
-    { "nome": "Pernambuco", "sigla": "PE" },
-    { "nome": "Piauí", "sigla": "PI" },
-    { "nome": "Rio de Janeiro", "sigla": "RJ" },
-    { "nome": "Rio Grande do Norte", "sigla": "RN" },
-    { "nome": "Rio Grande do Sul", "sigla": "RS" },
-    { "nome": "Rondônia", "sigla": "RO" },
-    { "nome": "Roraima", "sigla": "RR" },
-    { "nome": "Santa Catarina", "sigla": "SC" },
-    { "nome": "São Paulo", "sigla": "SP" },
-    { "nome": "Sergipe", "sigla": "SE" },
-    { "nome": "Tocantins", "sigla": "TO" }
+    "AC",
+    "AL",
+    "AP",
+    "AM",
+    "BA",
+    "CE",
+    "DF",
+    "ES",
+    "GO",
+    "MA",
+    "MT",
+    "MS",
+    "MG",
+    "PA",
+    "PB",
+    "PR",
+    "PE",
+    "PI",
+    "RJ",
+    "RN",
+    "RS",
+    "RO",
+    "RR",
+    "SC",
+    "SP",
+    "SE",
+    "TO"
 
   ]
 
   constructor(
+    private fb: FormBuilder,
+    private realEstateService: RealEstateService,
     private zipCodeService: ZipCodeService,
-    private fb: FormBuilder
   ) { }
 
   ngOnInit() {
     this.formGroup = this.fb.group({
-      
+      nome: ['', [Validators.required]],
+      finalidade: ['', [Validators.required]],
+      tipo: ['', [Validators.required]],
+      endereco: this.fb.group({
+        cep: ['', [Validators.required]],
+        rua: ['', [Validators.required]],
+        numero: ['', [Validators.required]],
+        complemento: [''],
+        bairro: ['', [Validators.required]],
+        cidade: ['', [Validators.required]],
+        uf: ['', [Validators.required]]
+      }),
+      valor: ['', [Validators.required]],
+      area: ['', [Validators.required]],
+      unidade: ['', [Validators.required]],
+      areaPrivativa: [''],
+      quartos: [''],
+      suites: [''],
+      banheiros: [''],
+      garagem: [''],
+      mobiliado: [false],
+      iptu: [''],
+      condominio: [''],
+      nomeRazaoSocial: ['', [Validators.required]],
+      telefone: ['', [Validators.required]],
+      cpfCnpj: ['', [Validators.required]],
+      email: ['', [Validators.required]],
+      dataAnuncio: ['']
     })
   }
 
   async listZipCode() {
-    await this.zipCodeService.getZipCode('31150260')
+    const cep = this.formGroup.value.endereco['cep']
+    let logradouro = this.formGroup.get('endereco.rua')
+    let bairro = this.formGroup.get('endereco.bairro')
+    let localidade = this.formGroup.get('endereco.cidade')
+    let uf = this.formGroup.get('endereco.uf')
+    const res$ = await this.zipCodeService.getZipCode(cep)
+    logradouro?.setValue(res$.logradouro)
+    bairro?.setValue(res$.bairro)
+    localidade?.setValue(res$.localidade)
+    uf?.setValue(res$.uf)
+  }
+
+  async submit() {
+    let inBody = this.formGroup.getRawValue()
+    let array = []
+    inBody.finalidade === "aluguel" ? inBody.venda = false : inBody.venda = true
+    inBody.aluguel = !inBody.venda
+    array.push(inBody.endereco)
+    inBody.endereco = array
+    delete inBody.finalidade 
+    inBody.dataAnuncio = moment().format()
+    if (this.formGroup.valid) {
+      await this.realEstateService.createRealEstate(inBody)
+    } else this.formGroup.markAllAsTouched()
   }
 
 }
