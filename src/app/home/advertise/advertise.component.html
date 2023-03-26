@@ -1,5 +1,5 @@
 <div class="p-5">
-  <form [formGroup]="formGroup" (submit)="submit()">
+  <form [formGroup]="formGroup" (submit)="saveRealEstate()" *ngIf="formGroup">
     <div class="row my-5">
       <h5 class="">Qual tipo de imóvel está anunciando?</h5>
       <div class="col">
@@ -22,39 +22,41 @@
         </select>
       </div>
     </div>
-    <div class="row my-5" formGroupName="endereco">
-      <h5 class="">Onde ele está localizado?</h5>
-      <div class="col-md-4">
-        <label class="form-label">CEP <span class="text-danger">*</span></label>
-        <input type="text" class="form-control" placeholder="00000-000" mask="00000-000" (blur)="listZipCode()"
-          formControlName="cep">
-      </div>
-      <div class="col-md-4">
-        <label class="form-label">Logradouro <span class="text-danger">*</span></label>
-        <input type="text" class="form-control" placeholder="Logradouro" formControlName="rua">
-      </div>
-      <div class="col-md-2">
-        <label class="form-label">Número <span class="text-danger">*</span></label>
-        <input type="text" class="form-control" placeholder="Número" formControlName="numero">
-      </div>
-      <div class="col-md-2">
-        <label class="form-label">Complemento</label>
-        <input type="text" class="form-control" placeholder="Complemento" formControlName="complemento">
-      </div>
-      <div class="col-md-4">
-        <label class="form-label">Bairro <span class="text-danger">*</span></label>
-        <input type="text" class="form-control" placeholder="Bairro" formControlName="bairro">
-      </div>
-      <div class="col-md-4">
-        <label class="form-label">Cidade <span class="text-danger">*</span></label>
-        <input type="text" class="form-control" placeholder="Cidade" formControlName="cidade">
-      </div>
-      <div class="col-md-3">
-        <label class="form-label">Estado <span class="text-danger">*</span></label>
-        <select class="form-select" formControlName="uf">
-          <option selected hidden>Selecione um Estado</option>
-          <option *ngFor="let item of statesList" [value]="item">{{item}}</option>
-        </select>
+    <div class="row my-5" formArrayName="endereco" *ngFor="let item of endereco.controls;  let i = index">
+      <div [formGroupName]="i">
+        <h5 class="">Onde ele está localizado?</h5>
+        <div class="col-md-4">
+          <label class="form-label">CEP <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" placeholder="00000-000" mask="00000-000" (blur)="listZipCode(i)"
+            formControlName="cep">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Logradouro <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" placeholder="Logradouro" formControlName="rua">
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">Número <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" placeholder="Número" formControlName="numero">
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">Complemento</label>
+          <input type="text" class="form-control" placeholder="Complemento" formControlName="complemento">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Bairro <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" placeholder="Bairro" formControlName="bairro">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Cidade <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" placeholder="Cidade" formControlName="cidade">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Estado <span class="text-danger">*</span></label>
+          <select class="form-select" formControlName="uf">
+            <option selected hidden>Selecione um Estado</option>
+            <option *ngFor="let item of statesList" [value]="item">{{item}}</option>
+          </select>
+        </div>
       </div>
     </div>
     <div class="row my-5">
@@ -81,7 +83,7 @@
       </div>
       <div class="col-md-4">
         <label class="form-label">Quantidade de dormitórios</label>
-        <input type="number" class="form-control" min="0"formControlName="quartos">
+        <input type="number" class="form-control" min="0" formControlName="quartos">
       </div>
       <div class="col-md-4">
         <label class="form-label">Quantidade de suítes</label>
@@ -113,24 +115,27 @@
         <input type="text" class="form-control" placeholder="Condomínio" currencyMask formControlName="condominio">
       </div>
     </div>
-    <div class="row my-5">
-      <h5>Dados Pessoais</h5>
-      <p>Precisamos de alguns dados pessoais para que nós possamos entrar em contato com você</p>
-      <div class="col-md-4">
-        <label class="form-label">Nome <span class="text-danger">*</span></label>
-        <input type="text" class="form-control" placeholder="Nome" formControlName="nomeRazaoSocial">
-      </div>
-      <div class="col-md-4">
-        <label class="form-label">Telefone <span class="text-danger">*</span></label>
-        <input type="tel" class="form-control" placeholder="(00) 0 0000-0000" mask="(00) 0 0000-0000 || (00) 0000-0000" formControlName="telefone">
-      </div>
-      <div class="col-md-4">
-        <label class="form-label">CPF ou CNPJ <span class="text-danger">*</span></label>
-        <input type="text" class="form-control" placeholder="CPF ou CNPJ" mask="CPF_CNPJ" formControlName="cpfCnpj">
-      </div>
-      <div class="col-md-4">
-        <label class="form-label">E-mail <span class="text-danger">*</span></label>
-        <input type="e-mail" class="form-control" placeholder="E-mail" formControlName="email">
+    <div class="row my-5" formArrayName="proprietario" *ngFor="let item of proprietario.controls; let i = index">
+      <div [formGroupName]="i">
+        <h5>Dados Pessoais</h5>
+        <p>Precisamos de alguns dados pessoais para que nós possamos entrar em contato com você</p>
+        <div class="col-md-4">
+          <label class="form-label">Nome <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" placeholder="Nome" formControlName="nome">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Telefone <span class="text-danger">*</span></label>
+          <input type="tel" class="form-control" placeholder="(00) 0 0000-0000"
+            mask="(00) 0 0000-0000 || (00) 0000-0000" formControlName="telefone">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">CPF ou CNPJ <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" placeholder="CPF ou CNPJ" mask="CPF_CNPJ" formControlName="cpfCnpj">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">E-mail <span class="text-danger">*</span></label>
+          <input type="e-mail" class="form-control" placeholder="E-mail" formControlName="email">
+        </div>
       </div>
     </div>
     <button type="submit" class="btn btn-primary">Enviar dados</button>
