@@ -1,0 +1,7 @@
+<div class="modal-header bg-primary text-white border-0">
+  <h5 class="text-center text-white w-100 m-auto pl-3"><strong>{{model.title}}</strong></h5>
+  <button type="button" class="btn btn-close col-5" (click)="close(true)"></button>
+</div>
+<div class="modal-body text-center">
+  <div class="regular" [innerHTML]="model.msg"></div>
+</div>

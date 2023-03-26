@@ -3,11 +3,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CurrencyMaskConfig, CurrencyMaskModule, CURRENCY_MASK_CONFIG } from 'ng2-currency-mask';
+import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { NgxMaskModule } from 'ngx-mask';
 import { HeaderComponent } from '../components/header/header.component';
 import { CardComponent } from './../components/card/card.component';
 import { FooterComponent } from './../components/footer/footer.component';
+
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
   align: "left",
@@ -25,6 +27,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     RouterModule,
     HttpClientModule,
     TooltipModule.forRoot(),
+    ModalModule.forRoot(),
     NgxMaskModule.forChild(),
     CurrencyMaskModule
   ],
@@ -38,10 +41,12 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     FooterComponent,
     CardComponent,
     TooltipModule,
+    ModalModule,
     NgxMaskModule,
     CurrencyMaskModule
   ],
   providers: [
+    BsModalRef,
     { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }
   ]
 })
