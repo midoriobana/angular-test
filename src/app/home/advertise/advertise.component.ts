@@ -1,16 +1,22 @@
-import { RealEstateService } from './../../shared/providers/real-estate.service';
-import { ZipCodeService } from '../../shared/providers/zip-code.service';
+import { valueOrDefault } from './../../shared/commons/UsefulFunctions';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
+import { RealEstateService } from './../../shared/providers/real-estate.service';
+import { StorageService as storage } from './../../shared/providers/storage.service';
+import { ZipCodeService } from './../../shared/providers/zip-code.service';
 
 @Component({
   selector: 'app-advertise',
   templateUrl: './advertise.component.html'
 })
 export class AdvertiseComponent implements OnInit {
-  adress: any
   formGroup: FormGroup
+  endereco: any
+  proprietario: any
+  realEstate: any
+  id = storage.get('id')
+
   categoryList: any = [
     'Andar',
     'Apartamento',
@@ -72,68 +78,109 @@ export class AdvertiseComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private realEstateService: RealEstateService,
     private zipCodeService: ZipCodeService,
-  ) { }
+    private realEstateService: RealEstateService
+  ) {
+    this.getRealEstateById(this.id).then(() => {
+      this.formGroup = this.fb.group({
+        nome: [valueOrDefault(this.realEstate?.nome, ''), Validators.required],
+        finalidade: ['', Validators.required],
+        tipo: [valueOrDefault(this.realEstate?.tipo, ''), Validators.required],
+        endereco: this.fb.array([]),
+        valor: [valueOrDefault(this.realEstate?.valor, ''), Validators.required],
+        area: [valueOrDefault(this.realEstate?.area, ''), Validators.required],
+        unidade: [valueOrDefault(this.realEstate?.unidade, ''), Validators.required],
+        areaPrivativa: [valueOrDefault(this.realEstate?.areaPrivativa, 0)],
+        quartos: [valueOrDefault(this.realEstate?.quartos, 0)],
+        suites: [valueOrDefault(this.realEstate?.suites, 0)],
+        banheiros: [valueOrDefault(this.realEstate?.banheiros, 0)],
+        garagem: [valueOrDefault(this.realEstate?.garagem, 0)],
+        mobiliado: [valueOrDefault(this.realEstate?.mobiliado, false)],
+        iptu: [valueOrDefault(this.realEstate?.iptu, 0)],
+        condominio: [valueOrDefault(this.realEstate?.condominio, 0)],
+        proprietario: this.fb.array([]),
+        dataAnuncio: [valueOrDefault(this.realEstate?.dataAnuncio, '')]
+      })
+      this.endereco = this.formGroup.get('endereco') as FormArray
+      this.proprietario = this.formGroup.get('proprietario') as FormArray
+      this.addEndereco()
+      this.addProprietario()
+    })
+
+  }
 
   ngOnInit() {
-    this.formGroup = this.fb.group({
-      nome: ['', [Validators.required]],
-      finalidade: ['', [Validators.required]],
-      tipo: ['', [Validators.required]],
-      endereco: this.fb.group({
-        cep: ['', [Validators.required]],
-        rua: ['', [Validators.required]],
-        numero: ['', [Validators.required]],
-        complemento: [''],
-        bairro: ['', [Validators.required]],
-        cidade: ['', [Validators.required]],
-        uf: ['', [Validators.required]]
-      }),
-      valor: ['', [Validators.required]],
-      area: ['', [Validators.required]],
-      unidade: ['', [Validators.required]],
-      areaPrivativa: [''],
-      quartos: [''],
-      suites: [''],
-      banheiros: [''],
-      garagem: [''],
-      mobiliado: [false],
-      iptu: [''],
-      condominio: [''],
-      nomeRazaoSocial: ['', [Validators.required]],
-      telefone: ['', [Validators.required]],
-      cpfCnpj: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      dataAnuncio: ['']
+
+  }
+
+  async listZipCode(i: number) {
+    const endereco = this.endereco.at(i).controls
+    if (endereco.cep.value.length === 8) {
+      let logradouro = endereco['rua']
+      let bairro = endereco['bairro']
+      let localidade = endereco['cidade']
+      let uf = endereco['uf']
+      const res$ = await this.zipCodeService.getZipCode(endereco.cep.value)
+      logradouro?.setValue(res$.logradouro)
+      bairro?.setValue(res$.bairro)
+      localidade?.setValue(res$.localidade)
+      uf?.setValue(res$.uf)
+    }
+  }
+
+  createEnderecoFormGroup(item?: any): FormGroup {
+    return this.fb.group({
+      rua: [valueOrDefault(item?.rua, ''), Validators.required],
+      numero: [valueOrDefault(item?.numero, '')],
+      complemento: [valueOrDefault(item?.complemento, '')],
+      bairro: [valueOrDefault(item?.bairro, ''), Validators.required],
+      cidade: [valueOrDefault(item?.cidade, ''), Validators.required],
+      uf: [valueOrDefault(item?.uf, ''), Validators.required],
+      cep: [valueOrDefault(item?.cep, ''), Validators.required]
     })
   }
 
-  async listZipCode() {
-    const cep = this.formGroup.value.endereco['cep']
-    let logradouro = this.formGroup.get('endereco.rua')
-    let bairro = this.formGroup.get('endereco.bairro')
-    let localidade = this.formGroup.get('endereco.cidade')
-    let uf = this.formGroup.get('endereco.uf')
-    const res$ = await this.zipCodeService.getZipCode(cep)
-    logradouro?.setValue(res$.logradouro)
-    bairro?.setValue(res$.bairro)
-    localidade?.setValue(res$.localidade)
-    uf?.setValue(res$.uf)
+  createProprietarioFormGroup(item?: any): FormGroup {
+    return this.fb.group({
+      nome: [valueOrDefault(item?.nome, ''), Validators.required],
+      cpfCnpj: [valueOrDefault(item?.cpfCnpj, ''), Validators.required],
+      email: [valueOrDefault(item?.email, ''), Validators.required],
+      telefone: [valueOrDefault(item?.telefone, ''), Validators.required],
+    })
   }
 
-  async submit() {
+  async getRealEstateById(id: number) {
+    this.realEstate = await this.realEstateService.getRealEstateById(id)
+  }
+
+  async saveRealEstate() {
     let inBody = this.formGroup.getRawValue()
-    let array = []
     inBody.finalidade === "aluguel" ? inBody.venda = false : inBody.venda = true
     inBody.aluguel = !inBody.venda
-    array.push(inBody.endereco)
-    inBody.endereco = array
-    delete inBody.finalidade 
+    delete inBody.finalidade
     inBody.dataAnuncio = moment().format()
     if (this.formGroup.valid) {
-      await this.realEstateService.createRealEstate(inBody)
+      if (inBody.id) await this.realEstateService.createRealEstate(inBody)
+      else await this.realEstateService.editRealEstate(this.realEstate.id, inBody)
     } else this.formGroup.markAllAsTouched()
   }
 
+  addEndereco() {
+    const endereco = this.createEnderecoFormGroup()
+    if (this.realEstate.endereco) {
+      this.realEstate.endereco.map((item: any) => {
+        this.endereco.push(this.createEnderecoFormGroup(item))
+      })
+    } else this.endereco.push(endereco)
+  }
+
+
+  addProprietario() {
+    const proprietario = this.createProprietarioFormGroup()
+    if (this.realEstate.proprietario) {
+      this.realEstate.proprietario.map((item: any) => {
+        this.proprietario.push(this.createProprietarioFormGroup(item))
+      })
+    } else this.proprietario.push(proprietario)
+  }
 }

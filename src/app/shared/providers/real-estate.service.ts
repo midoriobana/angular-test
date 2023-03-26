@@ -22,8 +22,8 @@ export class RealEstateService {
 		return firstValueFrom(this.http.post(`${environment.API_URL}/${this.endpoint}`, inBody))
 	}
 
-	editRealEstate(inBody: any): Promise<any> {
-		return firstValueFrom(this.http.put(`${environment.API_URL}/${this.endpoint}`, inBody))
+	editRealEstate(id: string, inBody: any): Promise<any> {
+		return firstValueFrom(this.http.put(`${environment.API_URL}/${this.endpoint}/${id}`, inBody))
 	}
 
 	deleteRealEstate(id: any): Promise<any> {
