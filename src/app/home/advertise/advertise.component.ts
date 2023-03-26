@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { valueOrDefault } from './../../shared/commons/UsefulFunctions';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -5,6 +6,8 @@ import * as moment from 'moment';
 import { RealEstateService } from './../../shared/providers/real-estate.service';
 import { StorageService as storage } from './../../shared/providers/storage.service';
 import { ZipCodeService } from './../../shared/providers/zip-code.service';
+import { NavRouteLinks } from 'src/app/shared/commons/NavRouteLinks';
+import { DialogService } from 'src/app/shared/providers/dialog.service';
 
 @Component({
   selector: 'app-advertise',
@@ -79,38 +82,37 @@ export class AdvertiseComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private zipCodeService: ZipCodeService,
-    private realEstateService: RealEstateService
-  ) {
-    this.getRealEstateById(this.id).then(() => {
-      this.formGroup = this.fb.group({
-        nome: [valueOrDefault(this.realEstate?.nome, ''), Validators.required],
-        finalidade: ['', Validators.required],
-        tipo: [valueOrDefault(this.realEstate?.tipo, ''), Validators.required],
-        endereco: this.fb.array([]),
-        valor: [valueOrDefault(this.realEstate?.valor, ''), Validators.required],
-        area: [valueOrDefault(this.realEstate?.area, ''), Validators.required],
-        unidade: [valueOrDefault(this.realEstate?.unidade, ''), Validators.required],
-        areaPrivativa: [valueOrDefault(this.realEstate?.areaPrivativa, 0)],
-        quartos: [valueOrDefault(this.realEstate?.quartos, 0)],
-        suites: [valueOrDefault(this.realEstate?.suites, 0)],
-        banheiros: [valueOrDefault(this.realEstate?.banheiros, 0)],
-        garagem: [valueOrDefault(this.realEstate?.garagem, 0)],
-        mobiliado: [valueOrDefault(this.realEstate?.mobiliado, false)],
-        iptu: [valueOrDefault(this.realEstate?.iptu, 0)],
-        condominio: [valueOrDefault(this.realEstate?.condominio, 0)],
-        proprietario: this.fb.array([]),
-        dataAnuncio: [valueOrDefault(this.realEstate?.dataAnuncio, '')]
-      })
-      this.endereco = this.formGroup.get('endereco') as FormArray
-      this.proprietario = this.formGroup.get('proprietario') as FormArray
-      this.addEndereco()
-      this.addProprietario()
+    private realEstateService: RealEstateService,
+    private dialogService: DialogService,
+    private router: Router
+  ) { }
+
+  async ngOnInit() {
+    if (this.id) await this.getRealEstateById(this.id)
+    this.formGroup = this.fb.group({
+      nome: [valueOrDefault(this.realEstate?.nome, ''), Validators.required],
+      finalidade: ['', Validators.required],
+      tipo: [valueOrDefault(this.realEstate?.tipo, ''), Validators.required],
+      endereco: this.fb.array([]),
+      valor: [valueOrDefault(this.realEstate?.valor, ''), Validators.required],
+      area: [valueOrDefault(this.realEstate?.area, ''), Validators.required],
+      unidade: [valueOrDefault(this.realEstate?.unidade, ''), Validators.required],
+      areaPrivativa: [valueOrDefault(this.realEstate?.areaPrivativa, 0)],
+      quartos: [valueOrDefault(this.realEstate?.quartos, 0)],
+      suites: [valueOrDefault(this.realEstate?.suites, 0)],
+      banheiros: [valueOrDefault(this.realEstate?.banheiros, 0)],
+      garagem: [valueOrDefault(this.realEstate?.garagem, 0)],
+      mobiliado: [valueOrDefault(this.realEstate?.mobiliado, false)],
+      iptu: [valueOrDefault(this.realEstate?.iptu, 0)],
+      condominio: [valueOrDefault(this.realEstate?.condominio, 0)],
+      proprietario: this.fb.array([]),
+      dataAnuncio: [valueOrDefault(this.realEstate?.dataAnuncio, '')]
     })
-
-  }
-
-  ngOnInit() {
-
+    this.endereco = this.formGroup.get('endereco') as FormArray
+    this.proprietario = this.formGroup.get('proprietario') as FormArray
+    this.addEndereco()
+    this.addProprietario()
+    this.sellOrRent()
   }
 
   async listZipCode(i: number) {
@@ -126,6 +128,11 @@ export class AdvertiseComponent implements OnInit {
       localidade?.setValue(res$.localidade)
       uf?.setValue(res$.uf)
     }
+  }
+
+  sellOrRent() {
+    if (this.id)
+      this.realEstate.venda ? this.formGroup.get('finalidade')?.setValue('venda') : this.formGroup.get('finalidade')?.setValue('aluguel')
   }
 
   createEnderecoFormGroup(item?: any): FormGroup {
@@ -160,27 +167,41 @@ export class AdvertiseComponent implements OnInit {
     delete inBody.finalidade
     inBody.dataAnuncio = moment().format()
     if (this.formGroup.valid) {
-      if (inBody.id) await this.realEstateService.createRealEstate(inBody)
-      else await this.realEstateService.editRealEstate(this.realEstate.id, inBody)
+      if (this.realEstate?.id) {
+        await this.realEstateService.editRealEstate(this.realEstate.id, inBody)
+      }
+      else await this.realEstateService.createRealEstate(inBody)
+      this.success()
     } else this.formGroup.markAllAsTouched()
   }
 
   addEndereco() {
     const endereco = this.createEnderecoFormGroup()
-    if (this.realEstate.endereco) {
+    if (this.id) {
       this.realEstate.endereco.map((item: any) => {
         this.endereco.push(this.createEnderecoFormGroup(item))
       })
     } else this.endereco.push(endereco)
   }
 
-
   addProprietario() {
     const proprietario = this.createProprietarioFormGroup()
-    if (this.realEstate.proprietario) {
+    if (this.id) {
       this.realEstate.proprietario.map((item: any) => {
         this.proprietario.push(this.createProprietarioFormGroup(item))
       })
     } else this.proprietario.push(proprietario)
+  }
+
+  success() {
+    const model = {
+      title: 'Sucesso',
+      msg: 'Anúncio criado com sucesso!',
+    };
+    this.dialogService.success(model).subscribe((res: any) => {
+      if (res) {
+        this.router.navigate([NavRouteLinks.PAGE.HOME])
+      }
+    })
   }
 }

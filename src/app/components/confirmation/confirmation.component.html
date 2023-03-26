@@ -1,0 +1,10 @@
+<div class="modal-header bg-primary border-0">
+  <h5 class="text-center text-white w-100 m-auto pl-3"><strong>{{ model.title || 'Confirmação'}}</strong></h5>
+</div>
+<div class="modal-body text-center">
+  <div class="regular" [innerHTML]="model.msg"></div>
+</div>
+<div class="d-flex justify-content-around mb-3">
+  <button type="button" class="btn btn-outline-primary col-5" (click)="close(false)">{{model.botaoCancelar || 'NÃO'}}</button>
+  <button type="button" class="btn btn-primary col-5" (click)="close(true)">{{model.botaoConfirmar || 'SIM'}}</button>
+</div>
