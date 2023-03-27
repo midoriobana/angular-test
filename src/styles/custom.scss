@@ -14,11 +14,36 @@ html {
   min-height: 100%;
 }
 
+.confirm-button {
+  color: $primary !important;
+  &:hover{
+    color: #ffffff !important;
+  }
+}
+
 .custom-bg {
   background-image: url('https://images.pexels.com/photos/8293778/pexels-photo-8293778.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
   background-repeat: no-repeat;
   background-size: cover;
   height: 30rem;
+}
+
+.multiselect-dropdown .dropdown-btn {
+  background-color: white;
+}
+
+.multiselect-dropdown .dropdown-btn .selected-item-container .selected-item {
+  border: 1px solid $primary !important;
+  background: $primary !important;
+}
+
+.multiselect-item-checkbox input[type=checkbox] + div:before {
+  color: $primary !important;
+  border: 2px solid $primary !important;
+}
+
+.multiselect-item-checkbox input[type=checkbox]:checked + div:before {
+  background: $primary !important;
 }
 
 .form-group {

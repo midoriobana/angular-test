@@ -1,11 +1,13 @@
-<div class="row gap-3 p-5">
-  <div class="card col-sm-5 col-md-4 col-lg-3" *ngFor="let realEstate of realEstateList; let i = index">
-    <div class="">
-      <span class="">Cod: {{realEstate.id}}</span>
-      <button class="btn" (click)="editRealEstate(realEstate.id)"><i class="bi bi-pencil"></i></button>
-      <button class="btn" (click)="confirm(realEstate.id)"><i class="bi bi-trash3"></i></button>
+<div class="row gap-3 px-5 pt-5 m-5" style="padding-bottom: 250px;">
+  <div class="card col-sm-5 col-md-4 col-lg-3 p-0" *ngFor="let realEstate of realEstateList; let i = index">
+    <div class="position-relative">
+      <img src="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="card-img-top" alt="imagem-de-uma-casa">
+      <div>
+        <span class="position-absolute top-0 start-0 ms-2">Cod: {{realEstate.id}}</span>
+        <button class="btn position-absolute top-0" (click)="editRealEstate(realEstate.id)" style="right: 10% !important;"><i class="bi bi-pencil"></i></button>
+        <button class="btn position-absolute top-0 end-0" (click)="confirm(realEstate.id)"><i class="bi bi-trash3"></i></button>
+      </div>
     </div>
-    <img src="" class="card-img-top" alt="...">
     <div class="card-body">
       <h5 class="card-title">{{realEstate.nome}}</h5>
       <p class="card-text" *ngFor="let adress of realEstate.endereco">
