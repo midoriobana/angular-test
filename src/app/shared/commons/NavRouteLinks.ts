@@ -3,6 +3,7 @@ const enum RouterEnum {
   ABOUT = 'sobre',
   ADVERTISE = 'anuncie-seu-imovel',
   CONTACT = 'contato',
+  DETAILS = 'detalhes'
 }
 
 export class NavRouteLinks {
@@ -15,5 +16,6 @@ export class NavRouteLinks {
     ABOUT: RouterEnum.ABOUT,
     ADVERTISE: RouterEnum.ADVERTISE,
     CONTACT: RouterEnum.CONTACT,
+    DETAILS: RouterEnum.DETAILS,
   }
 }

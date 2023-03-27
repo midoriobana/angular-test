@@ -14,6 +14,26 @@ html {
   min-height: 100%;
 }
 
+.custom-bg {
+  background-image: url('https://images.pexels.com/photos/8293778/pexels-photo-8293778.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 30rem;
+}
+
+.form-group {
+  .ng-touched.ng-invalid {
+    ~.invalid-feedback {
+      display: block !important;
+    }
+  }
+}
+
+.fs-sm {
+  font-size: 12px;
+}
+
+
 .popover {
   position: absolute;
   top: 0;

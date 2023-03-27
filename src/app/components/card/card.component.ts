@@ -45,4 +45,9 @@ export class CardComponent implements OnInit {
     this.router.navigate([NavRouteLinks.PAGE.ADVERTISE])
   }
 
+  viewDetail(id: string) {
+    storage.save('id', id)
+    this.router.navigate([NavRouteLinks.PAGE.DETAILS])
+  }
+
 }

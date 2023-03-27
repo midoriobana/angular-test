@@ -1,0 +1,29 @@
+<div class="p-5 custom-bg d-flex align-items-center justify-content-center">
+  <div class="row gap-5 gap-md-2 justify-content-center">
+    <h1 class="text-white fw-bold">Seu próximo lar está aqui!</h1>
+    <div class="col-12 col-xs-12 col-sm-5 col-md-2 col-lg-2 col-xxl-2">
+      <select class="form-select" [(ngModel)]="type">
+        <option value="" selected hidden>Selecione</option>
+        <option [value]="item" *ngFor="let item of types; let i = index">{{item}}</option>
+      </select>
+    </div>
+    <div class="col-12 col-xs-12 col-sm-5 col-md-2 col-lg-2 col-xxl-2">
+      <select class="form-select" [(ngModel)]="city">
+        <option value="" selected hidden>Selecione</option>
+        <option [value]="item" *ngFor="let item of cities; let i = index">{{item}}</option>
+      </select>
+    </div>
+    <div class="col-12 col-xs-12 col-sm-5 col-md-2 col-lg-2 col-xxl-2">
+      <select class="form-select" [(ngModel)]="district">
+        <option value="" selected hidden>Selecione</option>
+        <option [value]="item" *ngFor="let item of districts; let i = index">{{item}}</option>
+      </select>
+    </div>
+    <div class="col-12 col-xs-12 col-sm-5 col-md-2 col-lg-2 col-xxl-2">
+      <button class="btn" (click)="clearInputs()">Limpar Filtros</button>
+    </div>
+    <div class="col-12 col-xs-12 col-sm-5 col-md-2 col-lg-2 col-xxl-2">
+      <button class="btn btn-primary text-white px-5">Buscar</button>
+    </div>
+  </div>
+</div>
