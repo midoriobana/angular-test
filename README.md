@@ -18,3 +18,5 @@ Para rodar esse projeto use `npm start`. Navegue até `http://localhost:4200/`
 
 Para rodar a api fake, use `npm start` e use a porta `http://localhost:5875`
 
+observação:
+Não deu tempo de implementar o filtro.
