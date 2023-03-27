@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { CurrencyMaskConfig, CurrencyMaskModule, CURRENCY_MASK_CONFIG } from 'ng2-currency-mask';
 import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -14,6 +15,7 @@ import { DetailsComponent } from './../components/details/details.component';
 import { FilterComponent } from './../components/filter/filter.component';
 import { FooterComponent } from './../components/footer/footer.component';
 import { InvalidFeedbackComponent } from './../components/invalid-feedback/invalid-feedback.component';
+import { FilterPipe } from './pipe/filter.pipe';
 
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
@@ -32,8 +34,10 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     RouterModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
+    NgMultiSelectDropDownModule.forRoot(),
     NgxMaskModule.forChild(),
     CurrencyMaskModule
   ],
@@ -45,6 +49,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     AlertComponent,
     InvalidFeedbackComponent,
     DetailsComponent,
+    FilterPipe
   ],
   exports: [
     HeaderComponent,
@@ -54,9 +59,12 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     InvalidFeedbackComponent,
     AlertComponent,
     DetailsComponent,
+    FilterPipe,
     FormsModule,
+    ReactiveFormsModule,
     TooltipModule,
     ModalModule,
+    NgMultiSelectDropDownModule,
     NgxMaskModule,
     CurrencyMaskModule
   ],
