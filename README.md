@@ -1,27 +1,20 @@
-# AngularTest
+# Midori Imóveis
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.6.
+![image](https://user-images.githubusercontent.com/60152991/227977309-7071d249-6167-45b5-b5c1-18ee5169381d.png)
 
-## Development server
+O objetivo deste projeto é desenvolver uma aplicação CRUD consumindo API e tecnologias como Angular, Typescript, Bootstrap, responsividade, etc.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Este site é fictício do setor de imobiliária, onde o usuário pode criar, editar, deletar e ler as informações sore os anúncios.
 
-## Code scaffolding
+## Versão
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Este projeto usa a versão 14.2.6 do [Angular CLI](https://github.com/angular/angular-cli).
 
-## Build
+## Como usar
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Para rodar esse projeto use `npm start`. Navegue até `http://localhost:4200/`
 
-## Running unit tests
+## API Fake
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Para rodar a api fake, use `npm start` e use a porta `http://localhost:5875`
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
