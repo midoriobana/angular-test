@@ -15,8 +15,6 @@ import { DetailsComponent } from './../components/details/details.component';
 import { FilterComponent } from './../components/filter/filter.component';
 import { FooterComponent } from './../components/footer/footer.component';
 import { InvalidFeedbackComponent } from './../components/invalid-feedback/invalid-feedback.component';
-import { FilterPipe } from './pipe/filter.pipe';
-
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
   align: "left",
@@ -48,8 +46,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     FilterComponent,
     AlertComponent,
     InvalidFeedbackComponent,
-    DetailsComponent,
-    FilterPipe
+    DetailsComponent
   ],
   exports: [
     HeaderComponent,
@@ -59,7 +56,6 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     InvalidFeedbackComponent,
     AlertComponent,
     DetailsComponent,
-    FilterPipe,
     FormsModule,
     ReactiveFormsModule,
     TooltipModule,
