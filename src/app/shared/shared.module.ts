@@ -1,4 +1,3 @@
-import { DetailsComponent } from './../components/details/details.component';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -8,8 +7,10 @@ import { CurrencyMaskConfig, CurrencyMaskModule, CURRENCY_MASK_CONFIG } from 'ng
 import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { NgxMaskModule } from 'ngx-mask';
+import { AlertComponent } from '../components/alert/alert.component';
 import { HeaderComponent } from '../components/header/header.component';
 import { CardComponent } from './../components/card/card.component';
+import { DetailsComponent } from './../components/details/details.component';
 import { FilterComponent } from './../components/filter/filter.component';
 import { FooterComponent } from './../components/footer/footer.component';
 import { InvalidFeedbackComponent } from './../components/invalid-feedback/invalid-feedback.component';
@@ -41,6 +42,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     FooterComponent,
     CardComponent,
     FilterComponent,
+    AlertComponent,
     InvalidFeedbackComponent,
     DetailsComponent,
   ],
@@ -50,6 +52,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     CardComponent,
     FilterComponent,
     InvalidFeedbackComponent,
+    AlertComponent,
     DetailsComponent,
     FormsModule,
     TooltipModule,

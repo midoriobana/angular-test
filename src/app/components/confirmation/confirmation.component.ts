@@ -19,8 +19,8 @@ export class ConfirmationComponent implements OnInit {
     this.result = new Subject()
   }
 
-  close(opcao: boolean) {
-    this.result.next(opcao)
+  close(option: boolean) {
+    this.result.next(option)
     this.modalRef.hide()
   }
 
