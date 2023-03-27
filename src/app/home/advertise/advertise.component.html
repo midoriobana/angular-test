@@ -1,143 +1,168 @@
 <div class="p-5">
   <form [formGroup]="formGroup" (submit)="saveRealEstate()" *ngIf="formGroup">
     <div class="row my-5">
-      <h5 class="">Qual tipo de imóvel está anunciando?</h5>
-      <div class="col">
+      <h5>Qual tipo de imóvel está anunciando?</h5>
+      <div class="col form-group">
         <label class="form-label">Nome do anúncio <span class="text-danger">*</span></label>
         <input type="text" class="form-control" placeholder="Nome do anúncio" formControlName="nome">
+        <invalid-feedback [field]="f['nome']"></invalid-feedback>
       </div>
-      <div class="col">
+      <div class="col form-group">
         <label class="form-label">Finalidade do imóvel <span class="text-danger">*</span></label>
         <select class="form-select" formControlName="finalidade">
           <option selected hidden>Selecione a finalidade</option>
           <option value="venda">Venda</option>
           <option value="aluguel">Aluguel</option>
         </select>
+        <invalid-feedback [field]="f['finalidade']"></invalid-feedback>
       </div>
-      <div class="col">
+      <div class="col form-group">
         <label class="form-label">Categoria do imóvel <span class="text-danger">*</span></label>
         <select class="form-select" formControlName="tipo">
           <option selected hidden>Selecione uma categoria</option>
           <option *ngFor="let item of categoryList" [value]="item">{{item}}</option>
         </select>
+        <invalid-feedback [field]="f['tipo']"></invalid-feedback>
       </div>
     </div>
-    <div class="row my-5" formArrayName="endereco" *ngFor="let item of endereco.controls;  let i = index">
+    <div class="my-5" formArrayName="endereco" *ngFor="let item of endereco.controls;  let i = index">
       <div [formGroupName]="i">
-        <h5 class="">Onde ele está localizado?</h5>
-        <div class="col-md-4">
-          <label class="form-label">CEP <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" placeholder="00000-000" mask="00000-000" (blur)="listZipCode(i)"
-            formControlName="cep">
+        <div class="row">
+          <h5>Onde ele está localizado?</h5>
+          <div class="col-md-4 form-group">
+            <label class="form-label">CEP <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" placeholder="00000-000" mask="00000-000" (blur)="listZipCode(i)"
+              formControlName="cep">
+            <invalid-feedback [field]="item.get('cep')"></invalid-feedback>
+          </div>
+          <div class="col-md-4 form-group">
+            <label class="form-label">Logradouro <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" placeholder="Logradouro" formControlName="rua">
+            <invalid-feedback [field]="item.get('rua')"></invalid-feedback>
+          </div>
+          <div class="col-md-2 form-group">
+            <label class="form-label">Número <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" placeholder="Número" formControlName="numero">
+            <invalid-feedback [field]="item.get('numero')"></invalid-feedback>
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">Complemento</label>
+            <input type="text" class="form-control" placeholder="Complemento" formControlName="complemento">
+          </div>
+          <div class="col-md-4 form-group">
+            <label class="form-label">Bairro <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" placeholder="Bairro" formControlName="bairro">
+            <invalid-feedback [field]="item.get('bairro')"></invalid-feedback>
+          </div>
+          <div class="col-md-4 form-group">
+            <label class="form-label">Cidade <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" placeholder="Cidade" formControlName="cidade">
+            <invalid-feedback [field]="item.get('cidade')"></invalid-feedback>
+          </div>
         </div>
-        <div class="col-md-4">
-          <label class="form-label">Logradouro <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" placeholder="Logradouro" formControlName="rua">
-        </div>
-        <div class="col-md-2">
-          <label class="form-label">Número <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" placeholder="Número" formControlName="numero">
-        </div>
-        <div class="col-md-2">
-          <label class="form-label">Complemento</label>
-          <input type="text" class="form-control" placeholder="Complemento" formControlName="complemento">
-        </div>
-        <div class="col-md-4">
-          <label class="form-label">Bairro <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" placeholder="Bairro" formControlName="bairro">
-        </div>
-        <div class="col-md-4">
-          <label class="form-label">Cidade <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" placeholder="Cidade" formControlName="cidade">
-        </div>
-        <div class="col-md-3">
+        <div class="col-md-3 form-group">
           <label class="form-label">Estado <span class="text-danger">*</span></label>
           <select class="form-select" formControlName="uf">
             <option selected hidden>Selecione um Estado</option>
             <option *ngFor="let item of statesList" [value]="item">{{item}}</option>
           </select>
+          <invalid-feedback [field]="item.get('uf')"></invalid-feedback>
         </div>
       </div>
     </div>
     <div class="row my-5">
-      <h5 class="">Quais as características dele?</h5>
-      <div class="col-md-4">
+      <h5>Quais as características dele?</h5>
+      <div class="col-md-4 form-group">
         <label class="form-label">Valor <span class="text-danger">*</span></label>
         <input type="text" class="form-control" placeholder="Valor" currencyMask formControlName="valor">
+        <invalid-feedback [field]="f['valor']"></invalid-feedback>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 form-group">
         <label class="form-label">Área Total <span class="text-danger">*</span></label>
         <input type="text" class="form-control" placeholder="Área Total" formControlName="area">
+        <invalid-feedback [field]="f['area']"></invalid-feedback>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 form-group">
         <label class="form-label">Unidade de medida <span class="text-danger">*</span></label>
         <select type="text" class="form-control" formControlName="unidade">
           <option value="" selected hidden>Selecione a unidade de medida</option>
           <option value="m">m²</option>
           <option value="h">Hectare</option>
         </select>
+        <invalid-feedback [field]="f['unidade']"></invalid-feedback>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 form-group">
         <label class="form-label">Área privativa </label>
         <input type="text" class="form-control" placeholder="Área privativa" formControlName="areaPrivativa">
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 form-group">
         <label class="form-label">Quantidade de dormitórios</label>
         <input type="number" class="form-control" min="0" formControlName="quartos">
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 form-group">
         <label class="form-label">Quantidade de suítes</label>
         <input type="number" class="form-control" min="0" formControlName="suites">
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 form-group">
         <label class="form-label">Quantidade de banheiros</label>
         <input type="number" class="form-control" min="0" formControlName="banheiros">
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 form-group">
         <label class="form-label">Quantidade de vagas de garagem</label>
         <input type="number" class="form-control" min="0" formControlName="garagem">
       </div>
-      <div class="col-md-4 my-2">
+      <div class="col-md-4 form-group my-2">
         <input class="form-check-input" type="checkbox" value="" id="check-cabinet" formControlName="mobiliado">
         <label class="form-check-label ms-2" for="check-cabinet">
           Este imóvel é mobiliado
         </label>
       </div>
+      <div class="col-12 form-group">
+        <label class="form-label">Descrição:</label>
+        <textarea class="form-control" style="resize: none" rows="8" formControlName="descricao" placeholder="Ressalte detalhes marcantes do imóvel, como orientação do sol, se tem banheira ou piscina, qualidade do piso, presença ou não de móveis e se tem meios de transporte público ou comércios próximos."></textarea>
+        <invalid-feedback [field]="f['descricao']"></invalid-feedback>
+      </div>
     </div>
     <div class="row">
       <h5>Possui custos recorrentes?</h5>
-      <div class="col-md-4">
+      <div class="col-md-4 form-group">
         <label class="form-label">IPTU</label>
         <input type="text" class="form-control" placeholder="IPTU" currencyMask formControlName="iptu">
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 form-group">
         <label class="form-label">Condomínio</label>
         <input type="text" class="form-control" placeholder="Condomínio" currencyMask formControlName="condominio">
       </div>
     </div>
-    <div class="row my-5" formArrayName="proprietario" *ngFor="let item of proprietario.controls; let i = index">
+    <div class="my-5" formArrayName="proprietario" *ngFor="let item of proprietario.controls; let i = index">
       <div [formGroupName]="i">
-        <h5>Dados Pessoais</h5>
-        <p>Precisamos de alguns dados pessoais para que nós possamos entrar em contato com você</p>
-        <div class="col-md-4">
-          <label class="form-label">Nome <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" placeholder="Nome" formControlName="nome">
-        </div>
-        <div class="col-md-4">
-          <label class="form-label">Telefone <span class="text-danger">*</span></label>
-          <input type="tel" class="form-control" placeholder="(00) 0 0000-0000"
-            mask="(00) 0 0000-0000 || (00) 0000-0000" formControlName="telefone">
-        </div>
-        <div class="col-md-4">
-          <label class="form-label">CPF ou CNPJ <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" placeholder="CPF ou CNPJ" mask="CPF_CNPJ" formControlName="cpfCnpj">
-        </div>
-        <div class="col-md-4">
-          <label class="form-label">E-mail <span class="text-danger">*</span></label>
-          <input type="e-mail" class="form-control" placeholder="E-mail" formControlName="email">
+        <div class="row">
+          <h5>Dados Pessoais</h5>
+          <p>Precisamos de alguns dados pessoais para que nós possamos entrar em contato com você</p>
+          <div class="col-md-4 form-group">
+            <label class="form-label">Nome <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" placeholder="Nome" formControlName="nome">
+            <invalid-feedback [field]="item.get('nome')"></invalid-feedback>
+          </div>
+          <div class="col-md-4 form-group">
+            <label class="form-label">Telefone <span class="text-danger">*</span></label>
+            <input type="tel" class="form-control" placeholder="(00) 0 0000-0000"
+              mask="(00) 0 0000-0000 || (00) 0000-0000" formControlName="telefone">
+            <invalid-feedback [field]="item.get('telefone')"></invalid-feedback>
+          </div>
+          <div class="col-md-4 form-group">
+            <label class="form-label">CPF ou CNPJ <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" placeholder="CPF ou CNPJ" mask="CPF_CNPJ" formControlName="cpfCnpj">
+            <invalid-feedback [field]="item.get('cpfCnpj')"></invalid-feedback>
+          </div>
+          <div class="col-md-4 form-group">
+            <label class="form-label">E-mail <span class="text-danger">*</span></label>
+            <input type="e-mail" class="form-control" placeholder="E-mail" formControlName="email">
+            <invalid-feedback [field]="item.get('email')"></invalid-feedback>
+          </div>
         </div>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary">Enviar dados</button>
+    <button type="submit" class="btn btn-primary text-white">Enviar dados</button>
   </form>
 </div>

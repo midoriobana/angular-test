@@ -1,3 +1,25 @@
-<p>
-  contato works!
-</p>
+<div class="p-5">
+  <h3>Entre em Contato:</h3>
+  <form [formGroup]="form" class="row" (submit)="submit()">
+    <div class="col-md-4 form-group">
+      <label for="nome">Nome: <span class="text-danger">*</span></label>
+      <input type="text" class="form-control" formControlName="nome">
+      <invalid-feedback [field]="f['nome']"></invalid-feedback>
+    </div>
+    <div class="col-md-4 form-group">
+      <label for="email">E-mail:<span class="text-danger">*</span></label>
+      <input type="email" class="form-control" formControlName="email">
+      <invalid-feedback [field]="f['email']"></invalid-feedback>
+    </div>
+    <div class="col-md-4 form-group">
+      <label for="mensagem">Mensagem:<span class="text-danger">*</span></label>
+      <div class="col-md-12">
+        <textarea class="form-control" style="resize: none" formControlName="mensagem"></textarea>
+        <invalid-feedback [field]="f['mensagem']"></invalid-feedback>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-primary text-white" type="submit">Enviar</button>
+    </div>
+  </form>
+</div>

@@ -1,13 +1,14 @@
-import { Router } from '@angular/router';
-import { valueOrDefault } from './../../shared/commons/UsefulFunctions';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { CustomValidators } from 'src/app/shared/commons/CustomValidators';
+import { NavRouteLinks } from 'src/app/shared/commons/NavRouteLinks';
+import { DialogService } from 'src/app/shared/providers/dialog.service';
+import { valueOrDefault } from './../../shared/commons/UsefulFunctions';
 import { RealEstateService } from './../../shared/providers/real-estate.service';
 import { StorageService as storage } from './../../shared/providers/storage.service';
 import { ZipCodeService } from './../../shared/providers/zip-code.service';
-import { NavRouteLinks } from 'src/app/shared/commons/NavRouteLinks';
-import { DialogService } from 'src/app/shared/providers/dialog.service';
 
 @Component({
   selector: 'app-advertise',
@@ -101,6 +102,7 @@ export class AdvertiseComponent implements OnInit {
       quartos: [valueOrDefault(this.realEstate?.quartos, 0)],
       suites: [valueOrDefault(this.realEstate?.suites, 0)],
       banheiros: [valueOrDefault(this.realEstate?.banheiros, 0)],
+      descricao: [valueOrDefault(this.realEstate?.descricao, ''), Validators.required],
       garagem: [valueOrDefault(this.realEstate?.garagem, 0)],
       mobiliado: [valueOrDefault(this.realEstate?.mobiliado, false)],
       iptu: [valueOrDefault(this.realEstate?.iptu, 0)],
@@ -138,7 +140,7 @@ export class AdvertiseComponent implements OnInit {
   createEnderecoFormGroup(item?: any): FormGroup {
     return this.fb.group({
       rua: [valueOrDefault(item?.rua, ''), Validators.required],
-      numero: [valueOrDefault(item?.numero, '')],
+      numero: [valueOrDefault(item?.numero, ''), Validators.required],
       complemento: [valueOrDefault(item?.complemento, '')],
       bairro: [valueOrDefault(item?.bairro, ''), Validators.required],
       cidade: [valueOrDefault(item?.cidade, ''), Validators.required],
@@ -151,7 +153,7 @@ export class AdvertiseComponent implements OnInit {
     return this.fb.group({
       nome: [valueOrDefault(item?.nome, ''), Validators.required],
       cpfCnpj: [valueOrDefault(item?.cpfCnpj, ''), Validators.required],
-      email: [valueOrDefault(item?.email, ''), Validators.required],
+      email: [valueOrDefault(item?.email, ''), Validators.compose([Validators.required, CustomValidators.validadorEmail])],
       telefone: [valueOrDefault(item?.telefone, ''), Validators.required],
     })
   }
@@ -169,9 +171,13 @@ export class AdvertiseComponent implements OnInit {
     if (this.formGroup.valid) {
       if (this.realEstate?.id) {
         await this.realEstateService.editRealEstate(this.realEstate.id, inBody)
+        this.success('atualizado')
       }
-      else await this.realEstateService.createRealEstate(inBody)
-      this.success()
+      else {
+        await this.realEstateService.createRealEstate(inBody)
+        this.success('criado')
+      }
+      
     } else this.formGroup.markAllAsTouched()
   }
 
@@ -193,10 +199,10 @@ export class AdvertiseComponent implements OnInit {
     } else this.proprietario.push(proprietario)
   }
 
-  success() {
+  success(message: string) {
     const model = {
       title: 'Sucesso',
-      msg: 'Anúncio criado com sucesso!',
+      msg: `Anúncio ${message} com sucesso!`,
     };
     this.dialogService.success(model).subscribe((res: any) => {
       if (res) {
@@ -204,4 +210,9 @@ export class AdvertiseComponent implements OnInit {
       }
     })
   }
+
+  get f() {
+    return this.formGroup.controls
+  }
+
 }

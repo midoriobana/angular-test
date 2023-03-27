@@ -1,0 +1,43 @@
+<div class="p-5" *ngIf="realEstate">
+  <small>Cod: {{realEstate.id}}</small>
+  <h1>{{realEstate.nome}}</h1>
+  <p class="fs-6 my-2">{{realEstate.descricao}}</p>
+  <p class="fs-4" *ngFor="let adress of realEstate.endereco">
+    <i class="bi bi-geo-alt-fill text-danger"></i> 
+    {{adress.bairro}} - {{adress.cidade}}/{{adress.uf}}
+  </p>
+  <p class="fs-4"><i class="bi bi-currency-dollar text-primary me-2"></i>{{realEstate.valor | currency:'BRL' }} -
+    <span *ngIf="realEstate.venda">Venda</span>
+    <span *ngIf="realEstate.aluguel">Aluguel</span>
+  </p>
+
+  <p class="fs-5">      
+    <span class="me-3" *ngIf="realEstate.condominio"> Condomínio: 
+      {{realEstate.condominio | currency: 'BRL'}}
+    </span>
+    <span *ngIf="realEstate.iptu"> IPTU:
+      {{realEstate.iptu | currency: 'BRL'}}
+    </span>
+  </p>
+
+  <div class="border d-flex align-items-center justify-content-around mt-5 py-3 px-4">
+    <span tooltip="Área Total"
+    placement="bottom" class="fs-sm text-break">Área Total: {{realEstate.area}}<span *ngIf="realEstate.unidade === 'm'">m²</span>
+    <span *ngIf="realEstate.unidade === 'h'">h</span></span>
+    
+    <span tooltip="Área Privativa"
+    placement="bottom" class="fs-sm text-break" *ngIf="realEstate.areaPrivativa > 0">Área Privativa: {{realEstate.areaPrivativa}}<span *ngIf="realEstate.unidade === 'm'">m²</span>
+    <span *ngIf="realEstate.unidade === 'h'">h</span></span>
+    <span tooltip="Dormitórios"
+    placement="bottom" class="fs-sm text-break" *ngIf="realEstate.quartos > 0"><img class="me-2" src="../../../assets/images/bed-icon.svg" alt="bed-icon" width="22px" height="auto">Dormitórios: {{realEstate.quartos}}</span>
+    <span tooltip="Banheiros"
+    placement="bottom" class="fs-sm text-break" *ngIf="realEstate.banheiros > 0"><img class="me-2" src="../../../assets/images/bathtub-icon.svg" alt="bathtub-icon" width="22px" height="auto">Banheiros: {{realEstate.banheiros}}</span>
+    <span tooltip="Suítes"
+    placement="bottom" class="fs-sm text-break" *ngIf="realEstate.suites > 0"><img clas="me-2" src="../../../assets/images/shower-icon.svg" alt="shower-icon" width="22px" height="auto">Suítes: {{realEstate.banheiros}}</span>
+    <span tooltip="Garagem"
+    placement="bottom" class="fs-sm text-break" *ngIf="realEstate.garagem > 0"><img class="me-2" src="../../../assets/images/garage-icon.svg" alt="garage-icon" width="22px" height="auto">Garagem: {{realEstate.banheiros}}</span>
+    <span tooltip="Mobiliado" placement="bottom" class="fs-sm text-break" *ngIf="realEstate.mobiliado"><img class="me-2" src="../../../assets/images/cabinet-icon.svg" alt="cabinet-icon" width="22px" height="auto">Mobiliado</span>
+  
+  </div>
+
+</div>
