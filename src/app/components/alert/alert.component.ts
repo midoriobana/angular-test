@@ -3,12 +3,16 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-success',
-  templateUrl: './success.component.html'
+  selector: 'app-alert',
+  templateUrl: './alert.component.html',
+  styles: [
+  ]
 })
-export class SuccessComponent implements OnInit {
+export class AlertComponent implements OnInit {
 
-  model: any = {}
+  msg: string
+  title: string
+  button: string
   result: Subject<boolean>
 
   constructor(

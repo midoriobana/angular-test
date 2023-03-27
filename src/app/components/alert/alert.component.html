@@ -1,0 +1,9 @@
+<div class="modal-header bg-info text-white border-0">
+  <h5 class="text-center text-white w-100 m-auto pl-3"><strong>{{title}}</strong></h5>
+</div>
+<div class="modal-body text-center">
+  <div class="regular" [innerHTML]="msg"></div>
+</div>
+<div class="modal-footer border-0 text-center mx-auto mt-0 pt-0">
+  <button type="button" class="btn btn-outline-info btn-block" (click)="close(true)">{{button || 'Entendi'}}</button>
+</div>

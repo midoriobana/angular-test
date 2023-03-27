@@ -38,4 +38,15 @@ export class DialogService {
     return (this.bsModalRef.content as SuccessComponent).result
   }
 
+  alert(model: any) {
+    this.defaultOptions = {
+      backdrop: 'static',
+      keyboard: false,
+      class: 'modal-dialog-centered modal-sm'
+    }
+    this.bsModalRef = this.modalService.show(SuccessComponent, this.defaultOptions)
+    this.bsModalRef.content.model = model
+    return (this.bsModalRef.content as SuccessComponent).result
+  }
+
 }
