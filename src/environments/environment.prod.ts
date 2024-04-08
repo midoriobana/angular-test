@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  API_URL: 'http://localhost:5875',
+  API_URL: 'https://midoriobana.github.io/fake-api/data.json',
 };
